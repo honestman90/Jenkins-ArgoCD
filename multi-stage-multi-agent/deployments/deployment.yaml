@@ -1,21 +1,15 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Application
 metadata:
-  labels:
-    app: solar-system
-  name: solar-system
+  name: guestbook
 spec:
-  selector:
-    matchLabels:
-      app: solar-system
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: solar-system
-    spec:
-      containers:
-      - name: solar-system
-        image: siddharth67/solar-system:v3
-        ports:
-        - containerPort: 80
+  destination:
+    name: ''
+    namespace: guestbook
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: guestbook
+    repoURL: 'https://github.com/honestman90/argocd-example-apps/'
+    targetRevision: HEAD
+  sources: []
+  project: default
